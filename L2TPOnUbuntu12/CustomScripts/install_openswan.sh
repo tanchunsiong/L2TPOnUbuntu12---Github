@@ -142,7 +142,6 @@ sudo sh -c "echo 'proxyarp' >> /etc/ppp/options.xl2tpd"
 sudo sh -c "echo 'lcp-echo-interval 30' >> /etc/ppp/options.xl2tpd"
 sudo sh -c "echo 'lcp-echo-failure 4' >> /etc/ppp/options.xl2tpd"
 
-sudo sh -c "echo 'azureuser l2tpd pass@word123 *' >> /etc/ppp/chap-secrets"
 sudo sh -c "echo '$1 l2tpd $2 *' >> /etc/ppp/chap-secrets"
 
 sudo sed -i '/^#.*net.ipv4.ip_forward=1/s/^#//' /etc/sysctl.conf
