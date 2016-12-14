@@ -70,8 +70,7 @@
     "vnetId": "[resourceId('Microsoft.Network/virtualNetworks', variables('virtualNetworkName'))]",
     "subnetRef": "[concat(variables('vnetId'), '/subnets/', variables('subnetName'))]",
     "vhdStorageName": "[concat('vhdstorage', uniqueString(resourceGroup().id))]",
-      "install_openswanScriptFolder": "CustomScripts",
-      "install_openswanScriptFileName": "install_openswan.sh"
+    "install_openswanScriptFileName": "https://raw.githubusercontent.com/tanchunsiong/L2TPOnUbuntu12---Github/master/L2TPOnUbuntu12/CustomScripts/install_openswan.sh"
   },
   "resources": [
     {
@@ -218,7 +217,7 @@
                 "autoUpgradeMinorVersion": true,
                 "settings": {
                   "fileUris": [
-                    "[concat(parameters('_artifactsLocation'), '/', variables('install_openswanScriptFolder'), '/', variables('install_openswanScriptFileName'), parameters('_artifactsLocationSasToken'))]"
+                    "variables('install_openswanScriptFileName')]"
                   ],
                   "commandToExecute": "[concat('sh ', variables('install_openswanScriptFileName'), ' ', parameters('adminUsername'), ' ',  parameters('adminPassword'), ' ',  parameters('publicSharedKey')) ]"
                 }
