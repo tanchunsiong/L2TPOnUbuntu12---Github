@@ -39,6 +39,18 @@
       "metadata": {
         "description": "The Ubuntu version for the VM. This will pick a fully patched image of this given Ubuntu version. Allowed values: 12.04.5-LTS, 14.04.2-LTS, 15.04."
       }
+    },
+    "_artifactsLocation": {
+      "type": "string",
+      "metadata": {
+        "description": "Auto-generated container in staging storage account to receive post-build staging folder upload"
+      }
+    },
+    "_artifactsLocationSasToken": {
+      "type": "securestring",
+      "metadata": {
+        "description": "Auto-generated token to access _artifactsLocation"
+      }
     }
   },
   "variables": {
@@ -58,7 +70,8 @@
     "vnetId": "[resourceId('Microsoft.Network/virtualNetworks', variables('virtualNetworkName'))]",
     "subnetRef": "[concat(variables('vnetId'), '/subnets/', variables('subnetName'))]",
     "vhdStorageName": "[concat('vhdstorage', uniqueString(resourceGroup().id))]",
-    "install_openswanScriptFileName": "https://raw.githubusercontent.com/tanchunsiong/L2TPOnUbuntu12---Github/master/L2TPOnUbuntu12/CustomScripts/install_openswan.sh"
+     "install_openswanScriptFolder": "CustomScripts",
+      "install_openswanScriptFileName": "install_openswan.sh"
   },
   "resources": [
     {
@@ -205,7 +218,7 @@
                 "autoUpgradeMinorVersion": true,
                 "settings": {
                   "fileUris": [
-                    "variables('install_openswanScriptFileName')]"
+                    "[concat(parameters('_artifactsLocation'), '/', variables('install_openswanScriptFolder'), '/', variables('install_openswanScriptFileName'), parameters('_artifactsLocationSasToken'))]"
                   ],
                   "commandToExecute": "[concat('sh ', variables('install_openswanScriptFileName'), ' ', parameters('adminUsername'), ' ',  parameters('adminPassword'), ' ',  parameters('publicSharedKey')) ]"
                 }
